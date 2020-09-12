@@ -7,7 +7,8 @@ if [[ "$1" = "serve" ]]; then
     ls /opt
     torchserve --start --ts-config /home/model-server/config.properties
 else
-    eval "$@"
+    echo "$@"
+    echo "command must be \"serve\""
 fi
 
 # prevent docker exit

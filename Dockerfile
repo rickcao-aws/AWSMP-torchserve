@@ -1,21 +1,17 @@
-FROM ubuntu:18.04
+FROM ubuntu:latest
 
 ENV PYTHONUNBUFFERED TRUE
 
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
-    fakeroot \
+RUN apt-get -y update \
+    && apt-get -y install --no-install-recommends \
     ca-certificates \
-    dpkg-dev \
-    g++ \
     python3-dev \
     openjdk-11-jdk \
-    curl \
-    vim \
+    wget \
     && rm -rf /var/lib/apt/lists/* \
     && cd /tmp \
-    && curl -O https://bootstrap.pypa.io/get-pip.py \
-    && python3 get-pip.py
+    && wget https://bootstrap.pypa.io/get-pip.py 
+    && python3 get-pip.py 
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 RUN update-alternatives --install /usr/local/bin/pip pip /usr/local/bin/pip3 1
@@ -24,8 +20,9 @@ RUN pip install --no-cache-dir psutil \
                 --no-cache-dir torch \
                 --no-cache-dir torchvision
                 
-ADD serve serve
-RUN pip install ../serve/
+RUN git clone https://github.com/pytorch/serve.git \ 
+    pip install ../serve/ \
+    && rm -rf /root/.cache
 
 COPY dockerd-entrypoint.sh /usr/local/bin/dockerd-entrypoint.sh
 RUN chmod +x /usr/local/bin/dockerd-entrypoint.sh
