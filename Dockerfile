@@ -26,8 +26,8 @@ RUN git clone https://github.com/pytorch/serve.git \
     && pip install ../serve/ \
     && rm -rf /root/.cache
 
-COPY dockerd-entrypoint.sh /usr/local/bin/dockerd-entrypoint.sh
-RUN chmod +x /usr/local/bin/dockerd-entrypoint.sh
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 RUN mkdir -p /home/model-server/ && mkdir -p /home/model-server/tmp
 COPY config.properties /home/model-server/config.properties
