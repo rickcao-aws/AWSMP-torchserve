@@ -1,1 +1,1 @@
-This repository serves as an end-to-end template for listing Pytorch models on AWS Marketplace using TorchServe.
+This notebook serves as an end-to-end template for listing Pytorch models in AWS Marketplace using TorchServe.
